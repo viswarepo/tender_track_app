@@ -1,0 +1,6 @@
+com\tender\common\KafkaConfig.class
+com\tender\common\TenantFilter.class
+com\tender\common\TenantContext.class
+com\tender\common\TaskEvent.class
+com\tender\common\TenantScope.class
+com\tender\common\SecurityConfig.class

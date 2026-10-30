@@ -1,0 +1,111 @@
+{
+  "realm": "tender_track",
+  "enabled": true,
+  "sslRequired": "none",
+  "roles": {
+    "realm": [
+      {
+        "name": "admin"
+      },
+      {
+        "name": "coordinator"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "tendertrack-web",
+      "enabled": true,
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "redirectUris": [
+        "http://localhost:5173/*"
+      ],
+      "webOrigins": [
+        "+"
+      ],
+      "protocolMappers": [
+        {
+          "name": "tenant_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "config": {
+            "user.attribute": "tenant_id",
+            "claim.name": "tenant_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true"
+          }
+        },
+        {
+          "name": "realm-roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "config": {
+            "claim.name": "realm_access.roles",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "viswa",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "viswa@example.com",
+      "firstName": "Viswa",
+      "lastName": "Admin",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Viswa@987",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "admin"
+      ]
+    },
+    {
+      "username": "marcus",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "marcus@example.com",
+      "firstName": "Marcus",
+      "lastName": "Coordinator",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Tender@123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "coordinator"
+      ]
+    },
+    {
+      "username": "elena",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "elena@example.com",
+      "firstName": "Elena",
+      "lastName": "Admin",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Tender@123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "admin"
+      ]
+    }
+  ]
+}

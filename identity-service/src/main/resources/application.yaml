@@ -1,0 +1,20 @@
+server:
+  port: 8089
+  error.include-message: always
+spring:
+  application.name: identity-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tender_identity_db
+    username: ${DB_USER:tender_identity_user}
+    password: ${DB_PASSWORD:password}
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate.ddl-auto: none   # Flyway builds the schema
+identity:
+  issuer: http://localhost:8089          # written into every token as "iss"
+  token-minutes: 30                      # how long a login lasts
+  cors-origin: http://localhost:5173     # the web app's address (browser calls /auth/login directly)
+  key-file: ./data/jwt-key.json          # signing key; created on first start. KEEP IT SECRET and back it up.
+  signup-enabled: true                   # lets anyone create an organization. Set false in production.
+  bootstrap-demo: true                   # creates demo organizations and users when the database is empty. Set false in production.

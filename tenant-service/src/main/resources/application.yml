@@ -1,0 +1,11 @@
+server.port: 8086
+spring:
+  application.name: tenant-service
+  datasource: { url: "jdbc:postgresql://localhost:5432/tender_tenant_db", username: tender_tenant_user, password: password }
+  flyway: { url: "jdbc:postgresql://localhost:5432/tender_tenant_db", user: tenant_care_user, password: password }
+  jpa: { open-in-view: false, hibernate.ddl-auto: update }
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8089/.well-known/jwks.json

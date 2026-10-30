@@ -1,0 +1,21 @@
+server.port: 8088
+server.error.include-message: always
+spring:
+  application.name: document-service
+  servlet.multipart: { max-file-size: 20MB, max-request-size: 21MB }
+  datasource: { url: "jdbc:postgresql://localhost:5432/tender_doc_db", username: tender_doc_user, password: password }
+  flyway: { url: "jdbc:postgresql://localhost:5432/tender_doc_db", user: doc_care_user, password: password }
+  jpa: { open-in-view: false, hibernate.ddl-auto: update }
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8089/.well-known/jwks.json
+# Where files are stored (local disk for development). Override with APP_STORAGE_ROOT.
+app.storage.root: ./data/documents

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="common" />
+        <module name="identity-service" />
+        <module name="gateway" />
+        <module name="notification-service" />
+        <module name="document-service" />
+      </profile>
+      <profile name="Annotation profile for tender-track" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+        </processorPath>
+        <module name="audit-service" />
+        <module name="flow-service" />
+        <module name="tenant-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="21" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="audit-service" options="-parameters" />
+      <module name="common" options="-parameters" />
+      <module name="document-service" options="-parameters" />
+      <module name="flow-service" options="-parameters" />
+      <module name="gateway" options="-parameters" />
+      <module name="identity-service" options="-parameters" />
+      <module name="notification-service" options="-parameters" />
+      <module name="tenant-service" options="-parameters" />
+    </option>
+  </component>
+</project>

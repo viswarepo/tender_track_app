@@ -1,0 +1,6 @@
+com\tender\controller\NotificationController$Body.class
+com\tender\controller\NotificationController.class
+com\tender\repository\SettingsRepository.class
+com\tender\service\NotificationService.class
+com\tender\domain\Settings.class
+com\tender\NotificationApplication.class

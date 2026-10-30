@@ -1,0 +1,26 @@
+server.port: 8084
+spring:
+  application.name: notification-service
+  datasource: { url: "jdbc:postgresql://localhost:5432/tender_not_db", username: tender_not_user, password: password }
+  flyway: { url: "jdbc:postgresql://localhost:5432/tender_not_db", user: not_care_user, password: password }
+  jpa: { open-in-view: false, hibernate.ddl-auto: update }
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: notification-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.tender.common
+        spring.json.value.default.type: com.tender.common.TaskEvent
+        spring.json.use.type.headers: false
+  mail: { host: localhost, port: 1025 }   # MailHog in docker compose; inbox at http://localhost:8025
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8089/.well-known/jwks.json

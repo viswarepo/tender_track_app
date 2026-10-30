@@ -1,0 +1,109 @@
+{
+  "name": "Company documents",
+  "titleField": "title",
+  "deadlineField": "expiresOn",
+  "reminders": [
+    {
+      "field": "expiresOn",
+      "label": "Expires",
+      "days": [
+        30,
+        7,
+        0
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "key": "title",
+      "label": "Document name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "category",
+      "label": "Category",
+      "type": "select",
+      "options": [
+        "Registration",
+        "Tax",
+        "Experience",
+        "Financial",
+        "License",
+        "Insurance",
+        "Quality certificate",
+        "Other"
+      ]
+    },
+    {
+      "key": "issuer",
+      "label": "Issued by",
+      "type": "text"
+    },
+    {
+      "key": "documentNumber",
+      "label": "Number or reference",
+      "type": "text"
+    },
+    {
+      "key": "issuedOn",
+      "label": "Issued on",
+      "type": "date"
+    },
+    {
+      "key": "expiresOn",
+      "label": "Expires on",
+      "type": "date"
+    }
+  ],
+  "states": [
+    {
+      "key": "VALID",
+      "label": "Valid",
+      "initial": true
+    },
+    {
+      "key": "RENEWING",
+      "label": "Renewal in progress"
+    },
+    {
+      "key": "ARCHIVED",
+      "label": "Archived",
+      "terminal": true
+    }
+  ],
+  "transitions": [
+    {
+      "from": "VALID",
+      "to": "RENEWING",
+      "label": "Start renewal",
+      "roles": [
+        "COORDINATOR"
+      ]
+    },
+    {
+      "from": "RENEWING",
+      "to": "VALID",
+      "label": "Renewed",
+      "roles": [
+        "COORDINATOR"
+      ]
+    },
+    {
+      "from": "VALID",
+      "to": "ARCHIVED",
+      "label": "Archive",
+      "roles": [
+        "COORDINATOR"
+      ]
+    },
+    {
+      "from": "RENEWING",
+      "to": "ARCHIVED",
+      "label": "Archive",
+      "roles": [
+        "COORDINATOR"
+      ]
+    }
+  ]
+}

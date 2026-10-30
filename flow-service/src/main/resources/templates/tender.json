@@ -1,0 +1,192 @@
+{
+  "name": "Tenders and bids",
+  "titleField": "title",
+  "deadlineField": "submissionDeadline",
+  "reminders": [
+    {
+      "field": "submissionDeadline",
+      "label": "Submission deadline",
+      "days": [
+        7,
+        3,
+        1,
+        0
+      ],
+      "skipStates": [
+        "SUBMITTED"
+      ]
+    },
+    {
+      "field": "clarificationDeadline",
+      "label": "Clarification deadline",
+      "days": [
+        2,
+        0
+      ],
+      "skipStates": [
+        "SUBMITTED",
+        "PREPARING"
+      ]
+    },
+    {
+      "field": "preBidMeeting",
+      "label": "Pre-bid meeting",
+      "days": [
+        2,
+        0
+      ],
+      "skipStates": [
+        "SUBMITTED"
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "key": "title",
+      "label": "Tender title",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "authority",
+      "label": "Issuing authority",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "estimatedValue",
+      "label": "Estimated value",
+      "type": "number"
+    },
+    {
+      "key": "currency",
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "INR",
+        "USD",
+        "EUR"
+      ]
+    },
+    {
+      "key": "depositAmount",
+      "label": "Deposit amount",
+      "type": "number"
+    },
+    {
+      "key": "preBidMeeting",
+      "label": "Pre-bid meeting",
+      "type": "date"
+    },
+    {
+      "key": "clarificationDeadline",
+      "label": "Clarification deadline",
+      "type": "date"
+    },
+    {
+      "key": "submissionDeadline",
+      "label": "Submission deadline",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "checklist",
+      "label": "Document checklist",
+      "type": "checklist",
+      "options": [
+        "Tender fee paid",
+        "Deposit arranged",
+        "Company registration documents",
+        "Experience certificates",
+        "Technical bid",
+        "Financial bid"
+      ]
+    }
+  ],
+  "states": [
+    {
+      "key": "IDENTIFIED",
+      "label": "Identified",
+      "initial": true
+    },
+    {
+      "key": "GO_NO_GO",
+      "label": "Go/No-go review"
+    },
+    {
+      "key": "PREPARING",
+      "label": "Preparing bid"
+    },
+    {
+      "key": "SUBMITTED",
+      "label": "Submitted"
+    },
+    {
+      "key": "WON",
+      "label": "Won",
+      "terminal": true
+    },
+    {
+      "key": "LOST",
+      "label": "Lost",
+      "terminal": true
+    },
+    {
+      "key": "NO_GO",
+      "label": "Declined",
+      "terminal": true
+    }
+  ],
+  "transitions": [
+    {
+      "from": "IDENTIFIED",
+      "to": "GO_NO_GO",
+      "label": "Send for go/no-go",
+      "roles": [
+        "COORDINATOR"
+      ]
+    },
+    {
+      "from": "GO_NO_GO",
+      "to": "PREPARING",
+      "label": "Approve: bid",
+      "roles": [
+        "ADMIN"
+      ],
+      "approval": true
+    },
+    {
+      "from": "GO_NO_GO",
+      "to": "NO_GO",
+      "label": "Decline",
+      "roles": [
+        "ADMIN"
+      ],
+      "approval": true
+    },
+    {
+      "from": "PREPARING",
+      "to": "SUBMITTED",
+      "label": "Mark submitted",
+      "roles": [
+        "COORDINATOR"
+      ]
+    },
+    {
+      "from": "SUBMITTED",
+      "to": "WON",
+      "label": "Mark won",
+      "roles": [
+        "COORDINATOR"
+      ]
+    },
+    {
+      "from": "SUBMITTED",
+      "to": "LOST",
+      "label": "Mark lost",
+      "roles": [
+        "COORDINATOR"
+      ]
+    }
+  ]
+}

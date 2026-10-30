@@ -1,0 +1,76 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: gateway
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8089/.well-known/jwks.json
+  cloud:
+    gateway:
+      server:
+        webflux:
+          # Applied to every route: a shared secret the downstream services could
+          # validate to make sure a request actually came through the gateway
+          # (see README "Trust boundary"). Not enforced by the sample downstream
+          # services yet - see the README for why, and how to add it.
+          #default-filters:
+          #  - AddRequestHeader=X-Gateway-Secret, "secret1234"
+
+          # Some services (identity-service) also answer CORS checks. If both add the header, the browser rejects the call.
+          default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
+
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowed-origins: "*"
+                allowed-methods: GET,POST,PUT,PATCH,DELETE,OPTIONS
+                allowed-headers: "*"
+
+          routes:
+            - id: identity
+              uri: http://127.0.0.1:8089
+              predicates:
+                - Path=/api/users/**,/api/me/**
+            - id: notifications
+              uri: http://127.0.0.1:8084
+              predicates:
+                - Path=/api/notifications/**
+            - id: tenant
+              uri: http://127.0.0.1:8086
+              predicates:
+                - Path=/api/tenant/**
+            - id: flow
+              uri: http://127.0.0.1:8087
+              predicates:
+                - Path=/api/flow/**
+            - id: documents
+              uri: http://127.0.0.1:8088
+              predicates:
+                - Path=/api/documents/**
+            - id: audit
+              uri: http://127.0.0.1:8082
+              predicates:
+                - Path=/api/audit/**
+
+# ---------------------------------------------------------------------------
+# Actuator / management
+# ---------------------------------------------------------------------------
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,gateway,info
+  endpoint:
+    gateway:
+      access: read-only
+
+# ---------------------------------------------------------------------------
+# Logging
+# ---------------------------------------------------------------------------
